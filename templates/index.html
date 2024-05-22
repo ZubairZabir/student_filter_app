@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Filter</title>
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      async function fetchStudents() {
+        const moveOutDate = document.getElementById("move-out-date").value;
+
+        const response = await fetch(`/students?move_out_date=${moveOutDate}`);
+        const students = await response.json();
+
+        const table = document.getElementById("students-table");
+        table.innerHTML =
+          "<tr><th>Last Name</th><th>First Name</th><th>Student Number</th><th>Spring Hall</th><th>Spring Room</th><th>Maymester Hall</th><th>Maymester Room</th><th>Email</th><th>Move In Date</th><th>Move Out Date</th></tr>";
+
+        students.forEach((student) => {
+          const row = table.insertRow();
+          row.insertCell(0).innerText = student.last_name;
+          row.insertCell(1).innerText = student.first_name;
+          row.insertCell(2).innerText = student.student_number;
+          row.insertCell(3).innerText = student.spring_hall;
+          row.insertCell(4).innerText = student.spring_room;
+          row.insertCell(5).innerText = student.maymester_hall;
+          row.insertCell(6).innerText = student.maymester_room;
+          row.insertCell(7).innerText = student.email;
+          row.insertCell(8).innerText = student.move_in_date;
+          row.insertCell(9).innerText = student.move_out_date;
+        });
+      }
+    </script>
+  </head>
+
+  <body>
+    <h1>Student Filter</h1>
+    <label for="move-out-date">Move Out Date:</label>
+    <input type="date" id="move-out-date" name="move-out-date" />
+    <button onclick="fetchStudents()">Filter</button>
+    <table id="students-table" border="1">
+      <tr>
+        <th>Last Name</th>
+        <th>First Name</th>
+        <th>Student Number</th>
+        <th>Spring Hall</th>
+        <th>Spring Room</th>
+        <th>Maymester Hall</th>
+        <th>Maymester Room</th>
+        <th>Email</th>
+        <th>Move In Date</th>
+        <th>Move Out Date</th>
+      </tr>
+    </table>
+  </body>
+</html>
